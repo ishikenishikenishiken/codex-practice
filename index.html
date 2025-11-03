@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>社内AI勉強会</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f7f7;
+      --text: #222;
+      --accent: #0066ff;
+      --card-bg: #ffffffcc;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #101318;
+        --text: #f3f3f3;
+        --accent: #6ea8ff;
+        --card-bg: #1c1f25cc;
+      }
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(120deg, var(--accent), #00c6ff);
+      color: #fff;
+      padding: 64px 20px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Blue_marble_Eastern_Hemisphere.jpg/640px-Blue_marble_Eastern_Hemisphere.jpg') center/cover;
+      opacity: 0.05;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    main {
+      flex: 1;
+      width: min(960px, 90vw);
+      margin: -40px auto 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(12px);
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      margin: 0 0 12px;
+      letter-spacing: 0.04em;
+    }
+
+    p.lead {
+      font-size: 1.1rem;
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.6rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      line-height: 1.7;
+    }
+
+    .timeline {
+      border-left: 3px solid var(--accent);
+      margin-left: 0.6rem;
+      padding-left: 1.4rem;
+    }
+
+    .timeline li {
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: rgba(0, 102, 255, 0.12);
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 0.85rem;
+      margin-right: 8px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0, 102, 255, 0.35);
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 48px 20px 32px;
+      }
+
+      .card {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>社内AI勉強会 2024</h1>
+    <p class="lead">最新のAIトレンドを理解し、実務への活用アイデアを見つけるための学びの場</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>開催概要</h2>
+      <p><strong>日時:</strong> 2024年6月14日 (金) 16:00 - 18:00</p>
+      <p><strong>会場:</strong> 本社 15F イノベーションラボ &amp; Teams配信</p>
+      <p><strong>対象:</strong> 全社 (エンジニア / ビジネス職問わず)</p>
+      <div>
+        <span class="tag">#生成AI</span>
+        <span class="tag">#機械学習</span>
+        <span class="tag">#ビジネス活用</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>アジェンダ</h2>
+      <ul class="timeline">
+        <li>
+          <strong>16:00 - 16:10</strong> オープニング・イントロダクション
+        </li>
+        <li>
+          <strong>16:10 - 16:40</strong> 基調講演「AI戦略ロードマップ2024」<br />
+          <small>DX推進室 室長 田中太郎</small>
+        </li>
+        <li>
+          <strong>16:40 - 17:10</strong> ハンズオン「ノーコードで試す生成AI活用」<br />
+          <small>AIサービス開発部 佐藤花子</small>
+        </li>
+        <li>
+          <strong>17:10 - 17:40</strong> 事例紹介「業務プロセス自動化の成功事例」<br />
+          <small>業務革新部 鈴木一郎</small>
+        </li>
+        <li>
+          <strong>17:40 - 18:00</strong> Q&amp;A / クロージング
+        </li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>参加メリット</h2>
+      <ul>
+        <li>最新のAI技術動向と社内の取り組みをキャッチアップできます。</li>
+        <li>実際の業務改善に役立つユースケースを学べます。</li>
+        <li>部署を越えたネットワーキングの機会が得られます。</li>
+      </ul>
+      <a class="btn" href="https://forms.example.com/ai-study" target="_blank" rel="noopener">参加登録はこちら</a>
+    </section>
+
+    <section class="card">
+      <h2>事前準備</h2>
+      <ul>
+        <li>Microsoft Teams アプリの最新バージョンをインストールしてください。</li>
+        <li>ハンズオン参加者は、社内データポータルのアカウントを有効化しておいてください。</li>
+        <li>質問や取り上げてほしいテーマがあれば、申し込みフォームに入力をお願いします。</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2024 Innovation Lab / AI Community
+  </footer>
+</body>
+</html>
