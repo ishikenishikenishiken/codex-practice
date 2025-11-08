@@ -1,0 +1,142 @@
+:root {
+    --green: #3b7a57;
+    --yellow: #f8c34a;
+    --gray: #f5f5f5;
+    --text-dark: #2f2f2f;
+    --text-light: #ffffff;
+    font-size: 16px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+    background-color: var(--gray);
+    color: var(--text-dark);
+    line-height: 1.7;
+}
+
+.hero {
+    background: linear-gradient(135deg, rgba(59, 122, 87, 0.9), rgba(56, 173, 169, 0.9)),
+        url('https://images.unsplash.com/photo-1514986888952-8cd320577b68?auto=format&fit=crop&w=1280&q=80') center/cover;
+    color: var(--text-light);
+    text-align: center;
+    padding: 4rem 1.5rem;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.hero p {
+    margin: 1rem auto 2rem;
+    max-width: 640px;
+}
+
+.cta {
+    display: inline-block;
+    background-color: var(--yellow);
+    color: var(--text-dark);
+    padding: 0.75rem 1.75rem;
+    border-radius: 999px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+    background-color: #ffffff;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.grid article {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.actions {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.actions h2 {
+    margin-bottom: 2rem;
+}
+
+.action-card {
+    background-color: var(--gray);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: inset 0 0 0 1px rgba(59, 122, 87, 0.1);
+    text-align: left;
+}
+
+.steps {
+    background-color: #fdf8ee;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    border: 1px solid rgba(59, 122, 87, 0.15);
+}
+
+.steps ol {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.resources ul {
+    list-style: none;
+    padding: 0;
+}
+
+.resources li {
+    margin-bottom: 0.75rem;
+}
+
+.resources a {
+    color: var(--green);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.resources a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #6f6f6f;
+}
+
+@media (max-width: 600px) {
+    .hero {
+        padding: 3rem 1rem;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
