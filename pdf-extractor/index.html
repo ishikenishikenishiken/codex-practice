@@ -152,11 +152,12 @@
     .spinner {
       display: none;
       justify-content: center;
-      gap: 0.75rem;
+
+      gap: 0.5rem;
       align-items: center;
       color: #1e88e5;
       font-weight: 600;
-      letter-spacing: 0.08em;
+main
     }
 
     .spinner.active {
@@ -165,38 +166,18 @@
 
     .spinner::before {
       content: "";
-      width: 22px;
-      height: 22px;
+
+      width: 20px;
+      height: 20px;
+main
       border-radius: 50%;
       border: 3px solid #90caf9;
       border-top-color: #1e88e5;
       animation: spin 0.9s linear infinite;
     }
 
-    .status {
-      display: none;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1rem;
-      border-radius: 999px;
-      background: rgba(30, 136, 229, 0.08);
-      color: #1e3a8a;
-      font-weight: 600;
-      text-align: center;
-      transition: opacity 0.2s ease;
-    }
 
-    .status.active {
-      display: flex;
-    }
-
-    .status-hint {
-      text-align: center;
-      color: #1e88e5;
-      font-weight: 600;
-    }
-
+main
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
@@ -247,8 +228,9 @@
       <section>
         <h2>3. 実行</h2>
         <button id="analyze-button" type="button">抽出する</button>
-        <div id="spinner" class="spinner" role="status" aria-live="polite">処理中...</div>
-        <div id="status" class="status" aria-live="polite" aria-atomic="true"></div>
+
+        <div id="spinner" class="spinner">処理中...</div>
+main
       </section>
 
       <section>
@@ -274,7 +256,8 @@
     const resultsContainer = document.getElementById('results');
     const previewContainer = document.getElementById('preview');
     const spinner = document.getElementById('spinner');
-    const statusMessage = document.getElementById('status');
+
+main
 
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -376,7 +359,9 @@
       });
     };
 
-    const readPdfText = async (file, onProgress) => {
+
+    const readPdfText = async (file) => {
+main
       const fileData = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: fileData }).promise;
       const pageTexts = [];
@@ -392,9 +377,7 @@
         });
         pageTexts.push(strings.join('\n'));
 
-        if (typeof onProgress === 'function') {
-          onProgress(pageNumber, pdf.numPages);
-        }
+ main
       }
 
       return pageTexts;
@@ -419,36 +402,29 @@
 
       analyzeButton.disabled = true;
       spinner.classList.add('active');
-      statusMessage.textContent = 'PDFを解析しています…';
-      statusMessage.classList.add('active');
-      resultsContainer.innerHTML = '<p class="status-hint">解析中です。しばらくお待ちください。</p>';
+
+      resultsContainer.innerHTML = '';
 
       try {
-        const pageTexts = await readPdfText(file, (current, total) => {
-          statusMessage.textContent = `ページ ${current} / ${total} を解析しています…`;
-        });
+        const pageTexts = await readPdfText(file);
         const fullText = pageTexts.join('\n');
         const results = extractValues(fullText, rawFields);
 
-        resultsContainer.innerHTML = '';
-
+main
         const fragment = document.createDocumentFragment();
         results.forEach((value, field) => {
           fragment.appendChild(createResultCard(field, value));
         });
         resultsContainer.appendChild(fragment);
         renderPreview(pageTexts);
-        statusMessage.textContent = '抽出が完了しました。結果をご確認ください。';
+
       } catch (error) {
         console.error(error);
         resultsContainer.innerHTML = '<p class="not-found">PDFの解析中にエラーが発生しました。ファイルの内容をご確認ください。</p>';
-        statusMessage.textContent = 'エラーが発生しました。もう一度お試しください。';
       } finally {
         analyzeButton.disabled = false;
         spinner.classList.remove('active');
-        if (!statusMessage.textContent) {
-          statusMessage.classList.remove('active');
-        }
+main
       }
     };
 
