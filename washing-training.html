@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>洗浄講習会ポータル</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f2f6f8;
+      --text: #102027;
+      --accent: #0dbdf2;
+      --accent-strong: #0285c7;
+      --card: rgba(255, 255, 255, 0.9);
+      --muted: #48616d;
+      --border: rgba(13, 189, 242, 0.15);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #08151c;
+        --text: #e5f5ff;
+        --accent: #35c5ff;
+        --accent-strong: #0dbdf2;
+        --card: rgba(16, 32, 42, 0.92);
+        --muted: #95b5c5;
+        --border: rgba(53, 197, 255, 0.28);
+      }
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: linear-gradient(160deg, rgba(13, 189, 242, 0.15), transparent 55%), var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.7;
+    }
+
+    header {
+      position: relative;
+      text-align: center;
+      padding: 80px 16px 60px;
+      color: #fff;
+      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.28), transparent 60%),
+        linear-gradient(135deg, #0dbdf2, #045de9);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1581578017420-639be5769d7c?auto=format&fit=crop&w=1400&q=80')
+        center/cover;
+      opacity: 0.18;
+      mix-blend-mode: screen;
+      z-index: -1;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(2.4rem, 5vw, 3.4rem);
+      letter-spacing: 0.06em;
+    }
+
+    p.lead {
+      margin: 0 auto;
+      width: min(640px, 90%);
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      opacity: 0.92;
+    }
+
+    main {
+      flex: 1;
+      width: min(1024px, 92vw);
+      margin: -48px auto 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 26px;
+      padding: clamp(24px, 3vw, 36px);
+      margin-bottom: 28px;
+      box-shadow: 0 26px 65px rgba(2, 133, 199, 0.16);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: clamp(1.6rem, 3vw, 2rem);
+      border-left: 5px solid var(--accent);
+      padding-left: 16px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      color: var(--accent-strong);
+      font-size: 1.2rem;
+    }
+
+    ul,
+    ol {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+
+    li + li {
+      margin-top: 10px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    @media (min-width: 768px) {
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .timeline {
+      display: grid;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      padding: 14px 18px;
+      border-left: 4px solid var(--accent);
+      background: rgba(13, 189, 242, 0.08);
+      border-radius: 18px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(2, 133, 199, 0.12);
+      color: var(--accent-strong);
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .checklist li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      background: rgba(13, 189, 242, 0.08);
+      border: 1px solid var(--border);
+    }
+
+    .checklist .icon {
+      font-size: 1.4rem;
+    }
+
+    .info {
+      border-radius: 18px;
+      padding: 16px 18px;
+      background: rgba(4, 93, 233, 0.08);
+      color: var(--accent-strong);
+      border: 1px solid rgba(4, 93, 233, 0.16);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 0.98rem;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(16, 32, 42, 0.08);
+      text-align: left;
+    }
+
+    th {
+      background: rgba(13, 189, 242, 0.12);
+      color: var(--accent-strong);
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 16px 48px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>洗浄講習会ポータル</h1>
+    <p class="lead">
+      製造ラインの衛生レベルをさらに高めるための社内講習会です。最新の洗浄手順と検証方法を学び、現場で即実践できるスキルを身につけましょう。
+    </p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>開催概要</h2>
+      <div class="grid grid-2">
+        <div>
+          <h3>日時</h3>
+          <p>2024年6月18日（火） 13:30〜16:30</p>
+          <div class="tag">対面＋ライブ配信</div>
+        </div>
+        <div>
+          <h3>会場</h3>
+          <p>第2工場 管理棟3F トレーニングルームA</p>
+          <p>オンライン参加者はTeamsの会議URLから入室してください。</p>
+        </div>
+      </div>
+      <div class="info" style="margin-top: 20px;">
+        参加対象：製造部・品質保証部・設備保全チームのリーダーおよび新任担当者（最大40名）
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>タイムテーブル</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>13:30 - オープニング</h3>
+          <p>講習の目的と成果目標の共有。品質保証部長より挨拶。</p>
+        </div>
+        <div class="timeline-item">
+          <h3>13:45 - 洗浄の基礎理論</h3>
+          <p>洗浄の四要素（温度・時間・化学力・物理力）と工場内のリスク事例を解説。</p>
+        </div>
+        <div class="timeline-item">
+          <h3>14:30 - 実機デモンストレーション</h3>
+          <p>ラインCのベルトコンベアを用いた分解洗浄の手順確認と注意ポイントの紹介。</p>
+        </div>
+        <div class="timeline-item">
+          <h3>15:20 - 検証と記録のワークショップ</h3>
+          <p>ATP測定結果の記録方法、チェックリスト作成の演習。</p>
+        </div>
+        <div class="timeline-item">
+          <h3>16:10 - 質疑応答・まとめ</h3>
+          <p>各部署の課題共有と改善アイデアのディスカッション。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>準備物チェックリスト</h2>
+      <ul class="checklist">
+        <li><span class="icon">🧤</span><span>耐薬品手袋・フェイスシールドなどの個人防護具（貸出あり）</span></li>
+        <li><span class="icon">📓</span><span>部門ごとの洗浄手順書（最新版）</span></li>
+        <li><span class="icon">📱</span><span>Teamsアプリをインストールした社給スマートフォン</span></li>
+        <li><span class="icon">🧪</span><span>自部署で使用している洗浄剤の仕様書（任意）</span></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>洗浄手順の重点ポイント</h2>
+      <div class="grid grid-3">
+        <div>
+          <h3>1. 事前準備</h3>
+          <ul>
+            <li>対象設備を完全停止し、ロックアウト・タグアウトを実施。</li>
+            <li>分解が必要な部位の写真を撮影し、復旧時の参考にする。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>2. 洗浄実施</h3>
+          <ul>
+            <li>洗浄剤の希釈率を確認し、適正温度で噴霧する。</li>
+            <li>ブラッシングや高圧洗浄の際は飛沫対策を徹底。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>3. 検証・記録</h3>
+          <ul>
+            <li>目視確認に加え、ATP測定器で数値を記録。</li>
+            <li>洗浄記録シートに担当者・時刻・結果を必ず記入。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="info" style="margin-top: 20px;">
+        2024年度より、重点設備については洗浄後24時間以内のフォローアップ点検を品質保証部が実施します。
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>関連資料ダウンロード</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>資料名</th>
+            <th>概要</th>
+            <th>担当部署</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>標準洗浄手順書（共通）</td>
+            <td>主要設備に共通する洗浄ステップと安全上の注意事項。</td>
+            <td>品質保証部</td>
+          </tr>
+          <tr>
+            <td>洗浄検証チェックリスト</td>
+            <td>ATP測定・拭き取り検査の記録フォーマット。</td>
+            <td>製造部ライン管理G</td>
+          </tr>
+          <tr>
+            <td>設備別分解図</td>
+            <td>ラインA/B/Cの分解ポイントと再組立手順。</td>
+            <td>設備保全チーム</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>参加登録</h2>
+      <p>
+        講習会への参加は下記フォームからお申し込みください。オンライン参加の方には、前日までに接続テストの案内をお送りします。
+      </p>
+      <form>
+        <div class="grid grid-2">
+          <label>
+            氏名<br />
+            <input type="text" name="name" placeholder="例：清掃 太郎" required style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border);" />
+          </label>
+          <label>
+            部署<br />
+            <input type="text" name="department" placeholder="例：製造部 第2ライン" required style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border);" />
+          </label>
+        </div>
+        <label style="display: block; margin-top: 18px;">
+          参加方法<br />
+          <select name="participation" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border);">
+            <option>会場参加</option>
+            <option>オンライン参加</option>
+            <option>調整中</option>
+          </select>
+        </label>
+        <label style="display: block; margin-top: 18px;">
+          質問・共有事項<br />
+          <textarea name="message" rows="4" placeholder="事前に共有したい内容があればご記入ください。" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border);"></textarea>
+        </label>
+        <button type="submit" style="margin-top: 20px; padding: 14px 28px; border-radius: 999px; border: none; background: linear-gradient(135deg, var(--accent), var(--accent-strong)); color: #fff; font-size: 1rem; font-weight: 600; cursor: pointer;">
+          登録内容を送信
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2024 Sanitation Excellence Project
+  </footer>
+</body>
+</html>
