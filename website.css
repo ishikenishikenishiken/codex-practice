@@ -1,0 +1,31 @@
+body {
+  background: #f6fff8;
+  color: #222;
+  font-family: 'Yu Gothic', 'Meiryo', sans-serif;
+  margin: 0;
+}
+header {
+  background: #53c8ae;
+  color: #fff;
+  padding: 30px 16px 16px 16px;
+  text-align: center;
+  border-bottom: 4px solid #40aa97;
+}
+h1 {
+  margin-top: 0;
+  font-size: 2em;
+  letter-spacing: 0.08em;
+}
+main {
+  max-width: 620px;
+  margin: 36px auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(83, 200, 174, 0.12);
+}
+
+
+
+
+

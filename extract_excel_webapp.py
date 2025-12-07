@@ -65,3 +65,6 @@ if extract_btn and uploaded_files and item_name:
     else:
         st.warning('該当するデータが見つかりませんでした')
 
+
+
+
