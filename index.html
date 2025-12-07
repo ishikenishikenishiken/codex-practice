@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>食品工場の身だしなみガイド</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f7f8;
+      --text: #1d2a2f;
+      --accent: #0ea5e9;
+      --accent-dark: #0284c7;
+      --card-bg: #ffffffee;
+      --muted: #4b5c63;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b1216;
+        --text: #e9f5ff;
+        --accent: #38bdf8;
+        --accent-dark: #0ea5e9;
+        --card-bg: #10202bda;
+        --muted: #9fb7c4;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: radial-gradient(circle at top right, rgba(14, 165, 233, 0.18), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--accent-dark), #67e8f9);
+      color: #fff;
+      padding: 72px 20px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1200&q=80')
+        center/cover;
+      opacity: 0.15;
+      mix-blend-mode: screen;
+      z-index: -1;
+    }
+
+    main {
+      flex: 1;
+      width: min(1000px, 92vw);
+      margin: -48px auto 72px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      padding: clamp(24px, 3vw, 36px);
+      box-shadow: 0 24px 60px rgba(14, 165, 233, 0.18);
+      backdrop-filter: blur(10px);
+      margin-bottom: 28px;
+      border: 1px solid rgba(14, 165, 233, 0.08);
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 3.4rem);
+      margin: 0 0 12px;
+      letter-spacing: 0.08em;
+      text-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    p.lead {
+      font-size: clamp(1.1rem, 2.4vw, 1.3rem);
+      margin: 0 auto;
+      width: min(640px, 90%);
+      opacity: 0.92;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: clamp(1.6rem, 3vw, 1.9rem);
+      border-left: 5px solid var(--accent);
+      padding-left: 14px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+      color: var(--accent-dark);
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      margin: 0;
+    }
+
+    li + li {
+      margin-top: 10px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 16px;
+    }
+
+    .tip {
+      background: rgba(14, 165, 233, 0.12);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 18px;
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .checklist {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      padding: 0;
+      list-style: none;
+      margin-top: 18px;
+    }
+
+    .checklist li {
+      border: 1px solid rgba(14, 165, 233, 0.18);
+      border-radius: 18px;
+      padding: 16px 18px;
+      background: rgba(255, 255, 255, 0.6);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .icon {
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(14, 165, 233, 0.18);
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background: rgba(14, 165, 233, 0.15);
+      color: var(--accent-dark);
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 18px 36px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding: 56px 16px 44px;
+      }
+
+      .card {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>食品工場の身だしなみガイド</h1>
+    <p class="lead">安全で清潔な製造ラインを保つために、全スタッフが徹底した身だしなみを実践しましょう。</p>
+    <hr />
+
+  <h2>他のページへのリンク</h2>
+  <ul>
+    <li><a href="index.html">身だしなみガイド（このページ）</a></li>
+    <li><a href="ai-study.html">AI勉強会ページ</a></li>
+  </ul>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>なぜ身だしなみが重要なのか</h2>
+      <p>
+        食品工場では、従業員の身だしなみが製品の安全性に直結します。不適切な服装や衛生管理は異物混入や食品事故を引き起こす恐れがあります。衛生基準を守ることで、
+        お客さまに安心を届けるだけでなく、従業員自身の安全と職場の信頼も守れます。
+      </p>
+      <div class="tip">
+        <strong>ポイント:</strong> 「迷ったら清潔第一」。身だしなみの疑問があれば、必ず現場リーダーに確認しましょう。
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>基本の装備</h2>
+      <div class="grid">
+        <div>
+          <h3>作業着</h3>
+          <ul>
+            <li>毎日洗濯した清潔なユニフォームを着用する。</li>
+            <li>袖口や裾は絞り、ほつれがない状態を保つ。</li>
+            <li>私物のアクセサリーや飾りが付いた服は不可。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>ヘアキャップ</h3>
+          <ul>
+            <li>髪の毛はすべてキャップの中に収める。</li>
+            <li>前髪やもみあげ、襟足が出ていないか鏡で確認。</li>
+            <li>ひげのある方は専用ネットを併用。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>マスク・手袋</h3>
+          <ul>
+            <li>鼻と口を完全に覆うサイズのマスクを着用。</li>
+            <li>作業ごとに手袋を交換し、破損がないか確認。</li>
+            <li>マスク・手袋は衛生的に扱い、ポケットに入れない。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>現場に持ち込めないもの</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>区分</th>
+            <th>例</th>
+            <th>理由</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>装飾品</td>
+            <td>指輪・腕時計・ネックレス・ピアス</td>
+            <td>異物混入・破損時の金属片混入を防ぐため</td>
+          </tr>
+          <tr>
+            <td>日用品</td>
+            <td>携帯電話・メモ帳・筆記具</td>
+            <td>衛生管理区域での落下・汚染リスクがあるため</td>
+          </tr>
+          <tr>
+            <td>化粧品</td>
+            <td>濃いメイク・香水・ネイルカラー</td>
+            <td>香り移りや異物混入を防ぎ、清潔感を保つため</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tip">
+        例外的に必要なものがある場合は、衛生管理責任者の許可を得てから持ち込むようにしてください。
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>入場前チェックリスト</h2>
+      <ul class="checklist">
+        <li><span class="icon">🧼</span><span>手洗い・アルコール消毒を正しい手順で実施した。</span></li>
+        <li><span class="icon">🪞</span><span>鏡で制服・髪・マスクの乱れがないか最終確認した。</span></li>
+        <li><span class="icon">🧤</span><span>手袋に破れや汚れがなく、サイズが適切である。</span></li>
+        <li><span class="icon">🧺</span><span>ポケット・袖に私物が入っていないか確認した。</span></li>
+        <li><span class="icon">📛</span><span>名札は固定され、落下防止カバーを装着している。</span></li>
+        <li><span class="icon">🚰</span><span>体調チェックシートに基づき、当日の健康状態に問題がない。</span></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>こまめなセルフチェック</h2>
+      <p>
+        長時間の作業では、身だしなみが乱れやすくなります。休憩の度に以下のポイントを確認し、衛生状態を保ちましょう。
+      </p>
+      <div class="grid">
+        <div>
+          <h3>休憩前</h3>
+          <ul>
+            <li>作業区域から出る前に指定の手順で手袋を廃棄する。</li>
+            <li>ユニフォームに汚れが付いた場合は予備と交換する。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>休憩後</h3>
+          <ul>
+            <li>更衣室で再度手洗い・粘着ローラーを実施する。</li>
+            <li>必要に応じてキャップ・マスクを新しいものに交換する。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>終業時</h3>
+          <ul>
+            <li>作業着は指定の回収ボックスへ入れ、私物と分ける。</li>
+            <li>ヘアキャップ・マスクは使い捨てし、ごみ箱に捨てる。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>教育とフォロー体制</h2>
+      <p>
+        新人研修では身だしなみチェックリストを用いて指導を行い、習熟度に応じて先輩スタッフが定期的にフォローします。現場内での声かけやチェック体制を整えることで、
+        身だしなみルールの定着を図りましょう。
+      </p>
+      <div class="tip">
+        月に一度の衛生パトロールで撮影した写真を共有し、良い事例・改善点をチームで話し合うと効果的です。
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2024 Clean Food Factory Hygiene Team
+  </footer>
+</body>
+</html>

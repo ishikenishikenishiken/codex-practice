@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF項目抽出ツール</title>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #f7f9fc 0%, #ffffff 100%);
+      color: #1f2933;
+    }
+
+    header {
+      background-color: #1e88e5;
+      color: #fff;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(30, 136, 229, 0.35);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.9rem;
+      letter-spacing: 0.04em;
+    }
+
+    main {
+      max-width: 960px;
+      margin: -40px auto 4rem;
+      padding: 0 1.5rem 3rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.15);
+      padding: 2.25rem;
+      display: grid;
+      gap: 2rem;
+    }
+
+    .card section h2 {
+      margin-bottom: 0.75rem;
+      font-size: 1.25rem;
+      color: #0f172a;
+      border-left: 6px solid #1e88e5;
+      padding-left: 0.75rem;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="file"],
+    textarea {
+      width: 100%;
+      font-size: 1rem;
+      padding: 0.85rem 1rem;
+      border: 1px solid #d0d7e2;
+      border-radius: 10px;
+      background-color: #fdfdfd;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    input[type="file"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #1e88e5;
+      box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.25);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      appearance: none;
+      border: none;
+      border-radius: 999px;
+      padding: 0.9rem 2.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      background: linear-gradient(135deg, #1e88e5 0%, #42a5f5 100%);
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 12px 24px rgba(30, 136, 229, 0.3);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(30, 136, 229, 0.35);
+    }
+
+    button:disabled {
+      background: linear-gradient(135deg, #90caf9 0%, #64b5f6 100%);
+      cursor: progress;
+      box-shadow: none;
+    }
+
+    .hint {
+      font-size: 0.9rem;
+      color: #546a7b;
+      margin-top: 0.35rem;
+    }
+
+    .results {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .result-card {
+      border: 1px solid #d8e2ef;
+      border-radius: 14px;
+      padding: 1.5rem;
+      background: #fbfdff;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+
+    .result-card h3 {
+      margin: 0 0 0.75rem;
+      font-size: 1.1rem;
+      color: #1e293b;
+    }
+
+    .value {
+      font-family: "Source Code Pro", "Courier New", monospace;
+      background: rgba(30, 136, 229, 0.07);
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .not-found {
+      color: #bf1650;
+      font-weight: 600;
+    }
+
+    .spinner {
+      display: none;
+      justify-content: center;
+
+      gap: 0.5rem;
+      align-items: center;
+      color: #1e88e5;
+      font-weight: 600;
+main
+    }
+
+    .spinner.active {
+      display: flex;
+    }
+
+    .spinner::before {
+      content: "";
+
+      width: 20px;
+      height: 20px;
+main
+      border-radius: 50%;
+      border: 3px solid #90caf9;
+      border-top-color: #1e88e5;
+      animation: spin 0.9s linear infinite;
+    }
+
+
+main
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .page-preview {
+      font-size: 0.9rem;
+      color: #334155;
+      background: #f1f5f9;
+      border-radius: 10px;
+      padding: 1rem;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      max-height: 240px;
+      overflow: auto;
+    }
+
+    @media (max-width: 640px) {
+      header h1 { font-size: 1.5rem; }
+      .card { padding: 1.5rem; }
+      button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PDF項目抽出ツール</h1>
+    <p>PDFファイルから指定した項目を一括で抽出します。ファイルを選択して項目名を入力してください。</p>
+  </header>
+  <main>
+    <div class="card">
+      <section>
+        <h2>1. PDFファイルを選択</h2>
+        <label for="pdf-input">PDFファイル</label>
+        <input id="pdf-input" type="file" accept="application/pdf" />
+        <p class="hint">パスワード保護されたPDFには対応していません。</p>
+      </section>
+
+      <section>
+        <h2>2. 抽出したい項目名を入力</h2>
+        <label for="fields-input">項目名（1行につき1項目）</label>
+        <textarea id="fields-input" placeholder="例）
+会社名
+住所
+電話番号"></textarea>
+        <p class="hint">半角/全角スペースやコロン（:、：）の後に続く値を抽出します。</p>
+      </section>
+
+      <section>
+        <h2>3. 実行</h2>
+        <button id="analyze-button" type="button">抽出する</button>
+
+        <div id="spinner" class="spinner">処理中...</div>
+main
+      </section>
+
+      <section>
+        <h2>結果</h2>
+        <div id="results" class="results">
+          <p>まだ結果はありません。PDFと項目を指定して「抽出する」を押してください。</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>プレビュー</h2>
+        <p class="hint">抽出精度を確認するため、各ページのテキストを表示します。</p>
+        <div id="preview"></div>
+      </section>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" integrity="sha512-d0gkGyciQMSd42tbdeShW+OOz/YISMLzdG+zP1jPJB5BIWQ1juxNS7Df3lr6JcQiEiAZxsFSc3J0CnAcyxeQRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    const fileInput = document.getElementById('pdf-input');
+    const fieldsInput = document.getElementById('fields-input');
+    const analyzeButton = document.getElementById('analyze-button');
+    const resultsContainer = document.getElementById('results');
+    const previewContainer = document.getElementById('preview');
+    const spinner = document.getElementById('spinner');
+
+main
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    const normalizeField = (value) => value
+      .normalize('NFKC')
+      .replace(/[\s\u3000]+/g, ' ')
+      .trim();
+
+    const extractValues = (text, fields) => {
+      const normalizedLines = text
+        .split(/\r?\n/)
+        .map((line) => line.replace(/[\s\u3000]+/g, ' ').trim())
+        .filter(Boolean);
+
+      const results = new Map();
+
+      for (const rawField of fields) {
+        const field = normalizeField(rawField);
+        if (!field) {
+          continue;
+        }
+
+        const escapedField = escapeRegExp(field);
+        const mainPattern = new RegExp(`^${escapedField}(?:\s*[:：]\s*|\s+)(.+)$`, 'i');
+        const fallbackPattern = new RegExp(`${escapedField}(?:\s*[:：]\s*|\s+)([^:：\n]+)`, 'i');
+
+        let value = '';
+
+        for (let i = 0; i < normalizedLines.length; i += 1) {
+          const line = normalizedLines[i];
+          const match = line.match(mainPattern);
+          if (match) {
+            value = match[1].trim();
+            break;
+          }
+        }
+
+        if (!value) {
+          const fallbackMatch = text.match(fallbackPattern);
+          if (fallbackMatch) {
+            value = fallbackMatch[1].trim();
+          }
+        }
+
+        if (!value) {
+          const contiguousPattern = new RegExp(`${escapedField}[\s:：]+(.{1,60})`, 'i');
+          const contiguousMatch = text.match(contiguousPattern);
+          if (contiguousMatch) {
+            value = contiguousMatch[1].trim();
+          }
+        }
+
+        results.set(field, value || null);
+      }
+
+      return results;
+    };
+
+    const createResultCard = (title, value) => {
+      const container = document.createElement('div');
+      container.className = 'result-card';
+
+      const heading = document.createElement('h3');
+      heading.textContent = title;
+      container.appendChild(heading);
+
+      const content = document.createElement('p');
+      if (value) {
+        const valueSpan = document.createElement('span');
+        valueSpan.className = 'value';
+        valueSpan.textContent = value;
+        content.appendChild(valueSpan);
+      } else {
+        content.innerHTML = '<span class="not-found">該当する値が見つかりませんでした。</span>';
+      }
+
+      container.appendChild(content);
+      return container;
+    };
+
+    const renderPreview = (pageTexts) => {
+      previewContainer.innerHTML = '';
+      pageTexts.forEach((text, index) => {
+        const section = document.createElement('div');
+        section.className = 'result-card';
+
+        const heading = document.createElement('h3');
+        heading.textContent = `ページ ${index + 1}`;
+        section.appendChild(heading);
+
+        const content = document.createElement('pre');
+        content.className = 'page-preview';
+        content.textContent = text.trim() || '(テキストは見つかりませんでした)';
+        section.appendChild(content);
+
+        previewContainer.appendChild(section);
+      });
+    };
+
+
+    const readPdfText = async (file) => {
+main
+      const fileData = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: fileData }).promise;
+      const pageTexts = [];
+
+      for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+        const page = await pdf.getPage(pageNumber);
+        const content = await page.getTextContent();
+        const strings = content.items.map((item) => {
+          if ('str' in item) {
+            return item.str;
+          }
+          return '';
+        });
+        pageTexts.push(strings.join('\n'));
+
+ main
+      }
+
+      return pageTexts;
+    };
+
+    const analyze = async () => {
+      const file = fileInput.files && fileInput.files[0];
+      if (!file) {
+        alert('PDFファイルを選択してください。');
+        return;
+      }
+
+      const rawFields = fieldsInput.value
+        .split(/\r?\n/)
+        .map((field) => field.trim())
+        .filter(Boolean);
+
+      if (rawFields.length === 0) {
+        alert('抽出したい項目名を1つ以上入力してください。');
+        return;
+      }
+
+      analyzeButton.disabled = true;
+      spinner.classList.add('active');
+
+      resultsContainer.innerHTML = '';
+
+      try {
+        const pageTexts = await readPdfText(file);
+        const fullText = pageTexts.join('\n');
+        const results = extractValues(fullText, rawFields);
+
+main
+        const fragment = document.createDocumentFragment();
+        results.forEach((value, field) => {
+          fragment.appendChild(createResultCard(field, value));
+        });
+        resultsContainer.appendChild(fragment);
+        renderPreview(pageTexts);
+
+      } catch (error) {
+        console.error(error);
+        resultsContainer.innerHTML = '<p class="not-found">PDFの解析中にエラーが発生しました。ファイルの内容をご確認ください。</p>';
+      } finally {
+        analyzeButton.disabled = false;
+        spinner.classList.remove('active');
+main
+      }
+    };
+
+    analyzeButton.addEventListener('click', analyze);
+  </script>
+</body>
+</html>

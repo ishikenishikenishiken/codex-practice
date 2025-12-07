@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>社外向けAI勉強会 | Future Insights Lab</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --primary: #3b82f6;
+      --secondary: #1e293b;
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --card-bg: #ffffffdd;
+      --muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+      background: linear-gradient(180deg, #e0f2fe 0%, #f8fafc 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: rgba(15, 23, 42, 0.8);
+      color: white;
+      padding: 1.5rem 2rem;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(16px);
+      z-index: 10;
+    }
+
+    header nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header nav a.logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: white;
+      text-decoration: none;
+    }
+
+    header nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    header nav ul a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .hero {
+      padding: 6rem 1.5rem 4rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 2.5rem;
+      color: var(--secondary);
+    }
+
+    .hero .cta {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .hero .cta a {
+      padding: 0.85rem 1.8rem;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hero .cta a.primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .hero .cta a.secondary {
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .hero .cta a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+    }
+
+    section {
+      padding: 4rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 1.8rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+      backdrop-filter: blur(10px);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.25rem;
+    }
+
+    .agenda-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 1.5rem;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .agenda-item:last-child {
+      border-bottom: none;
+    }
+
+    .agenda-item time {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .agenda-item h4 {
+      margin: 0 0 0.3rem;
+    }
+
+    .agenda-item p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .speakers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .speaker-card {
+      text-align: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .speaker-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+    }
+
+    .speaker-card h4 {
+      margin: 0.5rem 0 0.25rem;
+    }
+
+    .speaker-card span {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .details-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .details-list li + li {
+      margin-top: 0.75rem;
+    }
+
+    .details-list strong {
+      display: inline-block;
+      width: 5.5rem;
+      color: var(--secondary);
+    }
+
+    .sponsor-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sponsor-logos span {
+      font-weight: 700;
+      color: var(--muted);
+      opacity: 0.8;
+      letter-spacing: 0.08em;
+    }
+
+    footer {
+      background: #0f172a;
+      color: rgba(255, 255, 255, 0.8);
+      padding: 3rem 1.5rem;
+    }
+
+    footer .footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    footer a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+    }
+
+    footer small {
+      display: block;
+      margin-top: 2rem;
+      text-align: center;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 640px) {
+      .agenda-item {
+        grid-template-columns: 1fr;
+        text-align: left;
+      }
+
+      .details-list strong {
+        width: 100%;
+        margin-bottom: 0.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="#" class="logo">Future Insights Lab</a>
+      <ul>
+        <li><a href="#about">概要</a></li>
+        <li><a href="#agenda">プログラム</a></li>
+        <li><a href="#speakers">登壇者</a></li>
+        <li><a href="#entry">参加申込</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Future Insights Lab 社外向けAI勉強会 2024</h1>
+      <p>
+        生成AIの最新トレンドや実務への活用方法を、業界をリードする専門家が解説。
+        異業種の参加者同士でノウハウを共有しながら、新たな協業のきっかけを創出します。
+      </p>
+      <div class="cta">
+        <a href="#entry" class="primary">参加申込はこちら</a>
+        <a href="#agenda" class="secondary">アジェンダを見る</a>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">イベント概要</h2>
+        <div class="info-grid">
+          <article class="card">
+            <h3>目的</h3>
+            <p>最新のAIテクノロジーと業務適用事例を共有し、企業横断での知見交流と新規ビジネス創出を支援します。</p>
+          </article>
+          <article class="card">
+            <h3>対象者</h3>
+            <p>DX推進担当者・新規事業開発担当者・AIエンジニア・コンサルタントなど、AI活用をリードする皆さま。</p>
+          </article>
+          <article class="card">
+            <h3>期待できる成果</h3>
+            <ul>
+              <li>生成AI・LLMの最新動向を把握</li>
+              <li>業界別の活用事例やPoCの成功ポイントを学習</li>
+              <li>他社とのネットワーキングによる協業チャンス</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="agenda" style="background: rgba(255,255,255,0.65);">
+      <div class="container">
+        <h2 class="section-title">当日のプログラム</h2>
+        <div class="card">
+          <div class="agenda-item">
+            <time>13:00 - 13:10</time>
+            <div>
+              <h4>オープニング &amp; オリエンテーション</h4>
+              <p>Future Insights Lab 代表より本イベントの背景とゴールをご紹介します。</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <time>13:10 - 13:50</time>
+            <div>
+              <h4>Keynote：生成AIがもたらすビジネス変革</h4>
+              <p>株式会社ユナイテッドインテリジェンス CTO 田中 俊介</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <time>14:00 - 14:40</time>
+            <div>
+              <h4>パネルディスカッション：業界別ユースケース最前線</h4>
+              <p>製造・金融・小売の各リーダーが現場での課題と成功事例を共有します。</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <time>14:50 - 15:30</time>
+            <div>
+              <h4>ハンズオン：社内データ×LLMによる業務自動化の進め方</h4>
+              <p>当社AIソリューションチームがPoC設計から運用までのステップを解説。</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <time>15:40 - 16:20</time>
+            <div>
+              <h4>ワークショップ：自社課題の洗い出しとアクション設計</h4>
+              <p>参加企業ごとに課題を整理し、翌日から実行できるアクションプランを策定します。</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <time>16:20 - 17:00</time>
+            <div>
+              <h4>ネットワーキングセッション</h4>
+              <p>軽食とドリンクをご用意。登壇者や他社参加者との交流時間です。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="speakers">
+      <div class="container">
+        <h2 class="section-title">登壇者紹介</h2>
+        <div class="speakers">
+          <article class="card speaker-card">
+            <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=240&q=80" alt="田中俊介">
+            <h4>田中 俊介</h4>
+            <span>株式会社ユナイテッドインテリジェンス CTO</span>
+            <p>大手IT企業でのAI研究開発を経て現職。生成AIを活用した業務改革プロジェクトを多数リード。</p>
+          </article>
+          <article class="card speaker-card">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=240&q=80" alt="佐藤瑠美">
+            <h4>佐藤 瑠美</h4>
+            <span>Future Insights Lab データサイエンス統括</span>
+            <p>自然言語処理・LLM運用の専門家。企業向けAI教育プログラムの企画・実装経験が豊富。</p>
+          </article>
+          <article class="card speaker-card">
+            <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?auto=format&fit=crop&w=240&q=80" alt="Alex Johnson">
+            <h4>Alex Johnson</h4>
+            <span>Global AI Advisors シニアコンサルタント</span>
+            <p>欧州・アジアのグローバル企業を支援。生成AIの倫理とガバナンス領域で数多くの講演実績。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="entry" style="background: rgba(59,130,246,0.08);">
+      <div class="container">
+        <h2 class="section-title">参加方法 &amp; 会場情報</h2>
+        <div class="info-grid">
+          <article class="card">
+            <h3>開催概要</h3>
+            <ul class="details-list">
+              <li><strong>日時</strong>2024年7月12日（金）13:00〜17:00</li>
+              <li><strong>会場</strong>Future Insights Lab Studio（東京都千代田区丸の内1-9-1）</li>
+              <li><strong>定員</strong>60名（先着順）</li>
+              <li><strong>参加費</strong>無料（事前申込制）</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>参加申込</h3>
+            <p>下記の申込フォームより必要事項をご入力ください。選考の結果は3営業日以内にご連絡いたします。</p>
+            <a class="primary" href="https://example.com/entry" style="display:inline-block;margin-top:1rem;padding:0.75rem 1.5rem;border-radius:999px;background:var(--primary);color:#fff;text-decoration:none;font-weight:700;">申込フォームを開く</a>
+          </article>
+          <article class="card">
+            <h3>お問い合わせ</h3>
+            <p>共催・協賛、メディア取材に関するお問い合わせは、<a href="mailto:events@futureinsightslab.jp">events@futureinsightslab.jp</a> までご連絡ください。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="section-title">協賛企業</h2>
+        <div class="card">
+          <div class="sponsor-logos">
+            <span>NEO DATA SOLUTIONS</span>
+            <span>BlueChip Analytics</span>
+            <span>CloudScale Partners</span>
+            <span>AI Navigator Consortium</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h3>Future Insights Lab</h3>
+        <p>AIを活用したビジネス変革を支援するコンサルティングファーム。戦略立案から実装まで包括的にサポートします。</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>Email: <a href="mailto:info@futureinsightslab.jp">info@futureinsightslab.jp</a><br>Tel: 03-1234-5678</p>
+      </div>
+      <div>
+        <h4>Follow us</h4>
+        <p>
+          <a href="https://www.linkedin.com">LinkedIn</a><br>
+          <a href="https://twitter.com">Twitter</a><br>
+          <a href="https://www.youtube.com">YouTube</a>
+        </p>
+      </div>
+    </div>
+    <small>&copy; 2024 Future Insights Lab. All rights reserved.</small>
+  </footer>
+</body>
+</html>
